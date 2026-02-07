@@ -1,0 +1,54 @@
+<div class="bg-zinc-100 w-dvw h-dvh p-6 flex flex-col gap-6 justify-center align-center">
+  <!-- header login -->
+  <div class="mx-auto max-w-[480px] flex flex-col justify-center align-center gap-4 mb-6">
+    <h1 class="font-black text-6xl text-center mb-6 border-6 rounded-lg w-[180px] mx-auto">Taska</h1>
+    <h2 class="font-semibold text-2xl text-center mb-1">Connexion</h2>
+    <h3 class="font-medium text-lg text-center text-gray-500 mb-4">Accédez à votre espace professionnel</h3>
+
+    @if (errorMessage()) {
+    <div class="text-red-600 font-light text-center" data-testid="login-error">
+      {{ errorMessage() }}
+    </div>
+    }
+
+    <form class="flex flex-col gap-2 w-[300px] justify-center align-center mx-auto" (submit)="onSubmit($event)"
+      data-testid="form">
+      <div class="h-[100px]">
+        <label class="font-medium" for="email" data-testid="form-label-email">Adresse email</label>
+        <input
+          class="mb-1 rounded-lg w-full p-[10px] bg-zinc-50 border border-gray-500/30 focus:outline-1 focus:outline-sky-500"
+          type="text" [ngClass]="{
+            'bg-red-500/10': loginForm.email().touched() && loginForm.email().invalid(),
+            'bg-zinc-50': !(loginForm.email().touched() && loginForm.email().invalid())
+          }" [formField]="loginForm.email" data-testid="form-email">
+        @if (loginForm.email().touched() && loginForm.email().invalid()) {
+        <ul>
+          @for (error of loginForm.email().errors(); track error) {
+          <li class="font-light text-red-600 mb-4" data-testid="form-error-email"> {{ error.message }} </li>
+          }
+        </ul>
+        }
+      </div>
+
+      <div class="h-[100px]">
+        <label class="font-medium" for="password" data-testid="form-label-password">Mot de passe</label>
+        <input
+          class="mb-1 rounded-lg w-full p-[10px] bg-zinc-50 border border-gray-500/30 focus:outline-1 focus:outline-sky-500"
+          type="text" [formField]="loginForm.password" data-testid="form-password">
+        @if (loginForm.password().touched() && loginForm.password().invalid()) {
+        <ul>
+          @for (error of loginForm.password().errors(); track error) {
+          <li class="font-light text-red-600 mb-4" data-testid="form-error-password"> {{ error.message }} </li>
+          }
+        </ul>
+        }
+      </div>
+
+      <button
+        class="p-[10px] flex justify-center align-center rounded-lg cursor-pointer bg-sky-500 hover:bg-sky-600 transition duration-300 ease-in-out"
+        type="submit" [disabled]="loginForm.email().invalid() ||
+          loginForm.password().value().length === 0" data-testid="form-submit">
+        <span class="text-white font-bold">Connexion</span></button>
+    </form>
+  </div>
+</div>
