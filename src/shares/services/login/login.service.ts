@@ -34,8 +34,6 @@ export class LoginService {
       map((user: User) => user),
       shareReplay(),
       tap((user: User) => {
-        console.log(user);
-
       this.currentUserSignal.set(user);
       localStorage.setItem('userId', user.id);
       localStorage.setItem('userEmail', user.email);

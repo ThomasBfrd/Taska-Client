@@ -48,13 +48,10 @@ export class LoginPage {
 
     const credentials: LoginData = this.loginModel();
 
-    this.loginService.login(credentials).pipe(takeUntilDestroyed(this.destroyRef), tap((user: any) => console.log(user)
-    )).subscribe({
+    this.loginService.login(credentials).pipe(takeUntilDestroyed(this.destroyRef)).subscribe({
       next: (user: User) => {
         this.loginModel.set({email: '', password: ''});
         this.loginForm().reset();
-
-        console.log(user);
       },
       error: (error: Error) => {
         this.errorMessage.set(`Erreur de connexion : ${error.message}`);
