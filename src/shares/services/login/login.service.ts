@@ -4,7 +4,7 @@ import { map, Observable, shareReplay, tap } from 'rxjs';
 import { User } from '../../interfaces/user.interface';
 import { Router } from '@angular/router';
 import { LoginData } from '../../interfaces/login-data.interface';
-import { environment } from '../../../environments/environment.development';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root',

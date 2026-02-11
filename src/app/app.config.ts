@@ -8,7 +8,7 @@ import { HttpLink } from 'apollo-angular/http';
 import { InMemoryCache } from '@apollo/client';
 import { httpInterceptor } from '../core/interceptors/http-interceptor';
 import { errorInterceptor } from '../core/interceptors/error-interceptor';
-import { environment } from '../environments/environment.development';
+import { environment } from '../environments/environment';
 
 export const appConfig: ApplicationConfig = {
   providers: [
