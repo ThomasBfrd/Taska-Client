@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { map, Observable } from "rxjs";
+import { catchError, map, Observable, of } from "rxjs";
 import { Apollo, gql } from "apollo-angular";
 import { Profile } from "../../interfaces/profile.interface";
 
@@ -37,6 +37,7 @@ export class ProfileService {
         withCredentials: true
       }
     }).pipe(
-      map((result) => result.data?.getProfile));
+      map((result) => result.data?.getProfile),
+      catchError(() => of(undefined)));
   }
 }

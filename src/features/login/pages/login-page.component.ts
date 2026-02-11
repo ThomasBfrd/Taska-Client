@@ -1,15 +1,10 @@
-import { ChangeDetectionStrategy, Component, DestroyRef, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, OnInit, signal } from '@angular/core';
 import { debounce, email, form, FormField, required } from '@angular/forms/signals';
 import { LoginService } from '../../../shares/services/login/login.service';
-import { User } from '../../../shares/interfaces/user.interface';
 import { NgClass } from '@angular/common';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { tap } from 'rxjs';
-
-export interface LoginData {
-  email: string;
-  password: string;
-}
+import { NavigationState } from '../../../core/interfaces/navigation-state.interface';
+import { LoginData } from '../../../shares/interfaces/login-data.interface';
 
 export const validateEmail = (email: string): boolean => {
   const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
@@ -23,9 +18,10 @@ export const validateEmail = (email: string): boolean => {
   imports: [FormField, NgClass],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class LoginPage {
+export class LoginPage implements OnInit {
   public constructor(
-    private readonly loginService: LoginService, private readonly destroyRef: DestroyRef
+    private readonly loginService: LoginService,
+    private readonly destroyRef: DestroyRef,
   ) {}
 
   protected readonly errorMessage = signal<string>('');
@@ -43,21 +39,30 @@ export class LoginPage {
     required(schemaPath.password, { message: 'Vous devez saisir un mot de passe.' });
   });
 
+  public ngOnInit(): void {
+    const state: NavigationState = history.state;
+    if (state?.reason === 'session-expired') {
+      this.errorMessage.set('Votre session a expiré, veuillez vous reconnecter.');
+    }
+  }
+
   protected onSubmit(event: Event) {
     event.preventDefault();
 
     const credentials: LoginData = this.loginModel();
 
-    this.loginService.login(credentials).pipe(takeUntilDestroyed(this.destroyRef)).subscribe({
-      next: (user: User) => {
-        this.loginModel.set({email: '', password: ''});
-        this.loginForm().reset();
-      },
-      error: (error: Error) => {
-        this.errorMessage.set(`Erreur de connexion : ${error.message}`);
-        console.error("Erreur de connexion", error);
-
-      }
-    });
+    this.loginService
+      .login(credentials)
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe({
+        next: () => {
+          this.loginModel.set({ email: '', password: '' });
+          this.loginForm().reset();
+        },
+        error: (error: Error) => {
+          this.errorMessage.set(`Erreur de connexion : ${error.message}`);
+          console.error('Erreur de connexion', error);
+        },
+      });
   }
 }
