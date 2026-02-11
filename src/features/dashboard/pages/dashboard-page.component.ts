@@ -1,10 +1,11 @@
-import { ChangeDetectionStrategy, Component, computed, OnInit, signal, Signal, WritableSignal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, DestroyRef, OnInit, signal, Signal, WritableSignal } from '@angular/core';
 import { ProfileService } from '../../../shares/services/profile/profile.service';
 import { Profile } from '../../../shares/interfaces/profile.interface';
 import { LoginService } from '../../../shares/services/login/login.service';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { FeaturesList } from '../components/features-list/features-list.component';
 import { ProfileFeature } from '../../../shares/interfaces/profile-feature.interface';
+import { catchError, throwError } from 'rxjs';
 
 export interface ProfileAndFeatures {
   profile: Profile | undefined;
@@ -36,5 +37,9 @@ export class DashboardPage {
     if (userId) {
       this.profile = toSignal(this.profileService.getProfile(userId));
     }
+  }
+
+  protected onLogout(): void {
+    this.loginService.logout();
   }
 }
