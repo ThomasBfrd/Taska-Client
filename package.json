@@ -1,6 +1,6 @@
 {
-  "name": "employee-board",
-  "version": "0.0.0",
+  "name": "taska",
+  "version": "0.0.1",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",

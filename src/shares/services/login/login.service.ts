@@ -4,6 +4,7 @@ import { map, Observable, shareReplay, tap } from 'rxjs';
 import { User } from '../../interfaces/user.interface';
 import { Router } from '@angular/router';
 import { LoginData } from '../../interfaces/login-data.interface';
+import { environment } from '../../../environments/environment.development';
 
 @Injectable({
   providedIn: 'root',
@@ -32,7 +33,7 @@ export class LoginService {
   public login(userBody: LoginData): Observable<User> {
     return this.httpClient
       .post<User>(
-        'http://localhost:3000/auth/login',
+        `${environment.apiUrl}/auth/login`,
         {
           email: userBody.email,
           password: userBody.password,
