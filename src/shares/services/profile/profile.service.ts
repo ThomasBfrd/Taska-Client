@@ -2,6 +2,8 @@ import { Injectable } from "@angular/core";
 import { catchError, map, Observable, of } from "rxjs";
 import { Apollo, gql } from "apollo-angular";
 import { Profile } from "../../interfaces/profile.interface";
+import { ErrorLike } from "@apollo/client";
+import { FetchResult } from "../../interfaces/fetch-result.interface";
 
 const GET_PROFILE = gql`
 query GetProfile($userId: String!) {
@@ -29,7 +31,7 @@ query GetProfile($userId: String!) {
 export class ProfileService {
   public constructor(private readonly apollo: Apollo) {}
 
-  public getProfile(userId: string): Observable<Profile | undefined> {
+  public getProfile(userId: string): Observable<FetchResult<Profile | undefined>> {
     return this.apollo.query<{getProfile: Profile}>({
       query: GET_PROFILE,
       variables: {userId},
@@ -37,7 +39,16 @@ export class ProfileService {
         withCredentials: true
       }
     }).pipe(
-      map((result) => result.data?.getProfile),
-      catchError(() => of(undefined)));
+      map((result: Apollo.QueryResult<{getProfile: Profile}>) => ({
+        isLoading: false,
+        error: result.error?.message || null,
+        data: result.data?.getProfile
+      })),
+      catchError((error: ErrorLike) => of({
+        isLoading: false,
+        error: error.message || "Can't get your profile.",
+        data: undefined
+      }))
+    );
   }
 }

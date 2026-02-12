@@ -10,8 +10,8 @@ import { ProfileFeature } from '../../../../shares/interfaces/profile-feature.in
 })
 export class FeaturesList {
   public readonly features: InputSignal<Array<ProfileFeature>> =
-    input.required<Array<ProfileFeature>>();
-  public readonly sectionTitle: InputSignal<string> = input.required<string>();
+    input<Array<ProfileFeature>>([]);
+  public readonly sectionTitle: InputSignal<string> = input<string>('');
 
   protected getConfig(key: string) {
     return CARDS[key];

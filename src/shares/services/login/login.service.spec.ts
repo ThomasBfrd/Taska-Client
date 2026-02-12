@@ -1,11 +1,11 @@
 import { TestBed } from "@angular/core/testing";
-import { LoginService } from "./login.service";
-import { LoginData } from "../../../features/login/pages/login-page.component";
-import { User } from "../../interfaces/user.interface";
-import { of, throwError } from "rxjs";
-import { HttpClient } from "@angular/common/http";
-import { Router } from "@angular/router";
-import { Mock } from "vitest";
+import { LoginService } from './login.service';
+import { User } from '../../interfaces/user.interface';
+import { of, throwError } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
+import { Mock } from 'vitest';
+import { LoginData } from '../../interfaces/login-data.interface';
 
 describe(LoginService.name, () => {
   let service: LoginService;
@@ -14,43 +14,43 @@ describe(LoginService.name, () => {
 
   beforeEach(() => {
     httpClientMock = {
-      post: vi.fn()
+      post: vi.fn(),
     };
 
     routerMock = {
-      navigate: vi.fn()
-    }
+      navigate: vi.fn(),
+    };
 
     TestBed.configureTestingModule({
       providers: [
         LoginService,
-        {provide: HttpClient, useValue: httpClientMock},
-        {provide: Router, useValue: routerMock},
-      ]
+        { provide: HttpClient, useValue: httpClientMock },
+        { provide: Router, useValue: routerMock },
+      ],
     });
 
     service = TestBed.inject(LoginService);
   });
 
-  it("devrait monter le service sans erreur", () => {
+  it('devrait monter le service sans erreur', () => {
     expect(service).toBeTruthy();
-  })
+  });
 
   it("devrait appeler la méthode login et retourner l'id et son adresse email", () => {
-    const loginFormMock: LoginData = {email: "johndoe@test.com", password: "test123"};
-    const mockUser: User = {id: "id1", email: "johndoe@test.com"};
+    const loginFormMock: LoginData = { email: 'johndoe@test.com', password: 'test123' };
+    const mockUser: User = { id: 'id1', email: 'johndoe@test.com' };
 
-    httpClientMock.post.mockReturnValue(of({user: mockUser}));
+    httpClientMock.post.mockReturnValue(of(mockUser));
 
     service.login(loginFormMock).subscribe((result: User) => {
       expect(result).toEqual(mockUser);
       expect(httpClientMock.post).toHaveBeenCalled();
-    })
-  })
+    });
+  });
 
-  it("devrait appeler la méthode login et retourner une erreur", () => {
-    const loginFormMock: LoginData = {email: "johndoe@test.com", password: "test123"};
-    const errorResponse: Error = new Error("Identifiants incorrects");
+  it('devrait appeler la méthode login et retourner une erreur', () => {
+    const loginFormMock: LoginData = { email: 'johndoe@test.com', password: 'test123' };
+    const errorResponse: Error = new Error('Identifiants incorrects');
 
     httpClientMock.post.mockReturnValue(throwError(() => errorResponse));
 
@@ -58,7 +58,7 @@ describe(LoginService.name, () => {
       next: () => {},
       error: (error: Error) => {
         expect(error).toBe(errorResponse);
-      }
-    })
-  })
-})
+      },
+    });
+  });
+});

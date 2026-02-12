@@ -1,8 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { DashboardPage } from './dashboard-page.component';
 import { ApolloTestingModule } from 'apollo-angular/testing';
-import { FeatureCard } from '../components/feature-card.component';
-import { By } from '@angular/platform-browser';
+import { FeatureCard } from '../components/feature-card/feature-card.component';
 
 describe(DashboardPage.name, () => {
   let fixture: ComponentFixture<DashboardPage>;

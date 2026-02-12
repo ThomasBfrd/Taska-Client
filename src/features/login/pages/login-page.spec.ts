@@ -156,15 +156,13 @@ describe("LoginPage", () => {
     fixture.detectChanges();
 
     form.dispatchEvent(new Event('submit'));
-    fixture.whenStable();
+    await fixture.whenStable();
     fixture.detectChanges();
 
     const errorElement = fixture.debugElement.query(
     By.css('[data-testid="login-error"]')
   );
   expect(errorElement).toBeTruthy();
-  expect(errorElement.nativeElement.textContent).toContain(
-    "Erreur de connexion : johndoe n'existe pas en base"
-  );
+  expect(errorElement.nativeElement.textContent).toContain("Erreur de connexion : johndoe n'existe pas en base");
   });
 })
