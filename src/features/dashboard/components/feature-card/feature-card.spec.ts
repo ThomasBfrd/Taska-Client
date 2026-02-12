@@ -32,6 +32,7 @@ describe(FeatureCard.name, () => {
         fixture.componentRef.setInput('details', expected.details);
         fixture.componentRef.setInput('path', expected.path);
         fixture.componentRef.setInput('labelPath', expected.labelPath);
+
         fixture.detectChanges();
       });
       it(`devrait afficher le titre ${expected.title}`, () => {
@@ -61,7 +62,7 @@ describe(FeatureCard.name, () => {
           By.css('[data-testid="card-data"]'),
         );
 
-        expect(dataCard.nativeElement.textContent).toBe(input.data);
+        expect(dataCard.nativeElement.textContent).toBe(input.data[0]);
       });
 
       it("devrait afficher le sous texte", () => {
