@@ -61,7 +61,6 @@ export class LoginPage implements OnInit {
         },
         error: (error: Error) => {
           this.errorMessage.set(`Erreur de connexion : ${error.message}`);
-          console.error('Erreur de connexion', error);
         },
       });
   }
