@@ -36,4 +36,8 @@ export class FeatureCard {
   protected readonly bgClasses = computed(() => this.COLOR_CLASSES[this.color() as CardColor].bg);
   protected readonly textClasses = computed(() => this.COLOR_CLASSES[this.color() as CardColor].text);
   protected readonly dataTextClasses = computed(() => this.COLOR_CLASSES[this.color() as CardColor].data);
+
+  protected onRedirectToFeaturePath(): void {
+
+  }
 }
