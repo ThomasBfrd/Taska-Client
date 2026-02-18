@@ -1,0 +1,49 @@
+@import "tailwindcss";
+
+@font-face {
+  font-family: 'Lato';
+  src: url('/fonts/Lato-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Lato';
+  src: url('/fonts/Lato-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Lato';
+  src: url('/fonts/Lato-Black.ttf') format('truetype');
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+body {
+  font-family: 'Lato', sans-serif;
+}
+
+.logo {
+  @apply text-zinc-950 font-black text-6xl text-center mb-6 border-6 rounded-lg w-45;
+}
+
+.loading {
+  @apply w-4 h-4 rounded-full bg-zinc-500 animate-bounce;
+}
+
+.label {
+  @apply font-medium;
+}
+
+.input {
+  @apply mb-1 rounded-lg w-full p-2.5 bg-zinc-50 border border-gray-500/30 focus:outline-1 focus:outline-sky-500;
+}
+
+.text-card {
+  @apply font-bold text-2xl text-balance;
+}

@@ -1,0 +1,18 @@
+<div class="flex flex-col gap-2 mb-6">
+  <h2 class="font-bold text-md pl-1 mb-2">{{ sectionTitle() }}</h2>
+  <div class="flex flex-row justify-start align-center flex-wrap gap-6">
+
+    @for (feature of features(); track feature.featureKey) {
+      <feature-card [
+        [title]="getConfig(feature.featureKey).title"
+        [details]="getConfig(feature.featureKey).details"
+        [path]="getConfig(feature.featureKey).path"
+        [labelPath]="getConfig(feature.featureKey).labelPath"
+        [color]="getConfig(feature.featureKey).color"
+        [icon]="getConfig(feature.featureKey).icon"
+        [data]="feature.data">
+      </feature-card>
+    }
+
+  </div>
+</div>
