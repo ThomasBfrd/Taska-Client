@@ -1,59 +1,76 @@
-# EmployeeBoard
+# 📌 Taska (Client)
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.1.0.
+[![Angular](https://img.shields.io/badge/Angular-%23DD0031.svg?logo=angular&logoColor=white)](#)
+[![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?logo=typescript&logoColor=fff)](#)
+[![Apollo GraphQL](https://img.shields.io/badge/Apollo%20GraphQL-311C87?logo=apollographql&logoColor=fff)](#)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind%20CSS-%2338B2AC.svg?logo=tailwind-css&logoColor=white)](#)
+[![Vitest](https://img.shields.io/badge/Vitest-6E9F18?logo=vitest&logoColor=fff)](#)
 
-## Development server
 
-To start a local development server, run:
+Taska is a web application that provides a personalized dashboard for managers and employees, based on a feature flag system depending on the user's role.
 
-```bash
-ng serve
+## ✨ Features
+
+### Authentication
+- Email/password login with JWT token management
+- Role-based access control
+
+### Dynamic Dashboard
+- Personalized dashboard based on user role
+- Feature flag system with auto-configured UI
+- Color-coded cards by feature type
+
+### Feature Flag System
+
+Features are dynamically loaded based on user permissions. 
+Card configuration in `card-config.ts`:
+
+``` typescript
+export const CARDS: Record<string, FeatureData> = {
+  "planning": {color: "sky", icon: "calendar_month", title: "Planning", details: "Aujourd'hui"},
+  "active-employees": {color: "sky", icon: "productivity", title: "Membres actifs", details: "Aujourd'hui"},
+  // ...
+}
 ```
+Then, the features are automaticly loaded in the dashboard when the feature key with their data are received.
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+## 🛠️ Tech Stack
+- Angular 21
+- NestJS
+- TypeScript
+- Tailwind
+- Mongoose
+- Apollo
+- GraphQL
+- Vitest
 
-## Code scaffolding
+## 📋 Prerequisites
+- Node.js (version 22.20.0 or higher)
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+## 🔧 Installation
+Clone the repository, then type in the command line : ```npm i```
 
-```bash
-ng generate component component-name
-```
+- Run in development: ```npm run start```
+- Build: ```npm run build```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+## 🚀 Getting Started
 
-```bash
-ng generate --help
-```
+### Access to your API
+Define your api url in your environment files.
+If you only want to test the client, you can keep the railway API.
 
-## Building
+**Employee demo access** : </br>
+employee@demo.com / Demo123!
 
-To build the project run:
+**Manager demo access** : </br>
+manager@demo.com / Demo456!
 
-```bash
-ng build
-```
+## 🧪 Testing
+The project uses Vitest for testing:
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+- Run unit tests: `npm run test`
+- Generate coverage report: `npm run coverage`
 
-## Running unit tests
-
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+## 🖼️ Screenshots
+![TaskaLogin](https://i.postimg.cc/fTR2kh8C/image.png)
+![TaskaDashboard](https://i.postimg.cc/pdkyW7kw/image.png)
