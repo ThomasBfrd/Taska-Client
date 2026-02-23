@@ -47,3 +47,7 @@ body {
 .text-card {
   @apply font-bold text-2xl text-balance;
 }
+
+.label-text-postit {
+  @apply text-[12px] flex flex-col;
+}
