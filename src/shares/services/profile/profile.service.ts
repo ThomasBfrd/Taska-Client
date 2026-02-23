@@ -14,7 +14,8 @@ query GetProfile($userId: String!) {
     lastName,
     city,
     birthDay,
-    tel
+    tel,
+    profileImg,
     features {
       featureKey,
       data,

@@ -9,6 +9,7 @@ export interface Profile {
   city: string,
   birthDay: string,
   tel: string,
+  profileImg: string;
   features: Array<ProfileFeature>;
 }
 
