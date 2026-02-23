@@ -4,14 +4,21 @@ import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 import { NgClass } from '@angular/common';
 import { FEATURES_CARDS_TEST_CASES } from '../../../../shares/tests/mocks/feature-cards.mock';
+import { Router } from '@angular/router';
 
 describe(FeatureCard.name, () => {
   let component: FeatureCard;
   let fixture: ComponentFixture<FeatureCard>;
+  let mockRouter: {navigateByUrl: any};
 
   beforeEach(async () => {
+    mockRouter = { navigateByUrl: vi.fn() };
+
     await TestBed.configureTestingModule({
       imports: [NgClass],
+      providers: [
+        {provide: Router, useValue: mockRouter},
+      ]
     }).compileComponents();
 
     fixture = TestBed.createComponent(FeatureCard);
@@ -85,8 +92,12 @@ describe(FeatureCard.name, () => {
           expect(labelPath).toBeNull();
           expect(path).toBeNull();
         } else {
+
+          labelPath.nativeElement.click();
+          fixture.detectChanges();
+
           expect(labelPath.nativeElement.textContent).toMatch(expected.labelPath);
-          expect(path.nativeElement.href).toMatch(expected.path);
+          expect(mockRouter.navigateByUrl).toHaveBeenCalledWith(`/${expected.path}`);
         }
 
       })

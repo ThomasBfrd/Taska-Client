@@ -1,6 +1,7 @@
 import { Component, computed, input, InputSignal, signal, Signal, WritableSignal } from '@angular/core';
 import {CdkDrag} from '@angular/cdk/drag-drop';
-import { LoginData } from '../../../../shares/interfaces/login-data.interface';
+import { LoginData } from '../../../../shares/interfaces/login-data.interface'
+import { NgClass } from '@angular/common';
 
 export type ROLE = 'employee' | 'manager';
 
@@ -8,7 +9,7 @@ export type ROLE = 'employee' | 'manager';
   selector: 'app-drag-logs',
   templateUrl: './drag-logs.component.html',
   styleUrl: './drags-logs.components.css',
-  imports: [CdkDrag],
+  imports: [CdkDrag, NgClass],
 })
 export class DragLogs {
 
