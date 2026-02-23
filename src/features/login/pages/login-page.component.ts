@@ -1,10 +1,12 @@
-import { ChangeDetectionStrategy, Component, DestroyRef, OnInit, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, OnInit, signal, WritableSignal } from '@angular/core';
 import { debounce, email, form, FormField, required } from '@angular/forms/signals';
 import { LoginService } from '../../../shares/services/login/login.service';
 import { NgClass } from '@angular/common';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { NavigationState } from '../../../core/interfaces/navigation-state.interface';
 import { LoginData } from '../../../shares/interfaces/login-data.interface';
+import { DragLogs } from '../components/drag-logs/drag-logs.component';
+import { sanitizeInput } from '../../../shares/utils/input-validations';
 
 export const validateEmail = (email: string): boolean => {
   const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
@@ -15,7 +17,7 @@ export const validateEmail = (email: string): boolean => {
 @Component({
   selector: 'login-page',
   templateUrl: './login-page.component.html',
-  imports: [FormField, NgClass],
+  imports: [FormField, NgClass, DragLogs],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LoginPage implements OnInit {
@@ -39,6 +41,11 @@ export class LoginPage implements OnInit {
     required(schemaPath.password, { message: 'Vous devez saisir un mot de passe.' });
   });
 
+  protected accounts: WritableSignal<Record<string, LoginData>> = signal<Record<string, LoginData>>({
+    "employee": {email: "employee@demo.com", password: "Demo123!"},
+    "manager": {email: "manager@demo.com", password: "Demo456!"},
+  });
+
   public ngOnInit(): void {
     const state: NavigationState = history.state;
     if (state?.reason === 'session-expired') {
@@ -49,7 +56,10 @@ export class LoginPage implements OnInit {
   protected onSubmit(event: Event) {
     event.preventDefault();
 
-    const credentials: LoginData = this.loginModel();
+    const credentials: LoginData = {
+      email: this.loginModel().email.trim(),
+      password: sanitizeInput(this.loginModel().password.trim())
+    };
 
     this.loginService
       .login(credentials)
