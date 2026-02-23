@@ -102,7 +102,7 @@ export const FEATURES_CARDS_TEST_CASES = [
   {
     input: {
       color: 'gray',
-      key: 'formations',
+      key: 'settings',
       data: ['data-mock'],
     },
     expected: {

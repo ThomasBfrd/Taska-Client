@@ -1,0 +1,32 @@
+<div class="postit-boundary relative max-w-120 w-full h-[95%] mx-auto mt-6">
+
+  <label class="absolute bottom-0 right-0 flex items-center justify-end">
+    <span class="mr-2 text-sm" [ngClass]="!checkedValue() ? 'font-bold' : null">Employee</span>
+    <input class="toggle-role relative w-10 h-5 transition-all duration-200 ease-in-out
+    bg-sky-500 rounded-full shadow-inner outline-none appearance-none cursor-pointer pointer-events-auto"
+    type="checkbox"
+    [checked]="checkedValue()"
+    (change)="toggleRole($event)"
+    data-testid="toggle-logs" />
+    <span class="ml-2 text-sm" [ngClass]="checkedValue() ? 'font-bold' : null">Manager</span>
+  </label>
+
+  <ul class="flex flex-row justify-evenly items-start gap-2">
+    @for (account of Object.values(filteredAccounts()); track account) {
+        <div
+          class="w-40 h-32 bg-amber-200 mt-6 p-4 flex flex-col gap-2 shadow-xl cursor-pointer pointer-events-auto"
+          cdkDragBoundary=".postit-boundary"
+          [cdkDragFreeDragPosition]="dragPosition"
+          cdkDrag>
+          <li class="label-text-postit">
+            <span class="font-bold">Email: </span>
+            <span data-testid="logs-text">{{ account?.email }}</span>
+          </li>
+          <li class="label-text-postit">
+            <span class="font-bold">Password: </span>
+            <span data-testid="logs-text">{{ account?.password }}</span>
+          </li>
+        </div>
+      }
+    </ul>
+</div>
