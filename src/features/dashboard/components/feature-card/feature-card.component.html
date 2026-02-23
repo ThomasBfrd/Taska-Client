@@ -12,7 +12,7 @@
   }
 
   @if (path() && labelPath()) {
-    <a class="text-xs cursor-pointer" (click)="onRedirectToFeaturePath()" data-testid="card-path">
+    <a class="text-xs cursor-pointer" (click)="onRedirectToFeaturePath(path())" data-testid="card-path">
       <span class="text-card" [ngClass]="dataTextClasses()" data-testid="card-label-path">{{ labelPath() }}</span>
     </a>
   }

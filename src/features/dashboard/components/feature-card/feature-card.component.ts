@@ -7,6 +7,7 @@ import {
   InputSignal,
 } from '@angular/core';
 import { CardColor } from '../../../../shares/types/card-color.type';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'feature-card',
@@ -24,6 +25,8 @@ export class FeatureCard {
   public readonly color: InputSignal<string | undefined> = input.required<string | undefined>();
   public readonly data: InputSignal<Array<string> | undefined> = input.required<Array<string> | undefined>();
 
+  public constructor(private readonly router: Router) {}
+
   private readonly COLOR_CLASSES: Record<CardColor, { bg: string; text: string; data: string }> = {
     'sky': { bg: 'bg-sky-900/8', text: 'text-sky-400', data: 'text-sky-500' },
     'orange': { bg: 'bg-orange-900/8', text: 'text-orange-400', data: 'text-orange-500' },
@@ -37,7 +40,7 @@ export class FeatureCard {
   protected readonly textClasses = computed(() => this.COLOR_CLASSES[this.color() as CardColor].text);
   protected readonly dataTextClasses = computed(() => this.COLOR_CLASSES[this.color() as CardColor].data);
 
-  protected onRedirectToFeaturePath(): void {
-
+  protected onRedirectToFeaturePath(path: string | undefined): void {
+    this.router.navigateByUrl(`/${path}`);
   }
 }
